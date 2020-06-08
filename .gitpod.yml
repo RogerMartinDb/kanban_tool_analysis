@@ -1,6 +1,6 @@
 tasks:
   - init: bundle install
-  command: rackup
+    command: rackup
 
 ports:
   - port: 9292
