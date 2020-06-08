@@ -1,0 +1,9 @@
+<div>
+	Welcome <%= @user['name'] %>
+
+	<ul>
+	<% @user["boards"].each do |board| %>
+		<li><a href="/board/<%= board['id'] %>"><%=board["name"] %></a></li>
+	<% end %>
+</ul>
+</div>

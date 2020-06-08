@@ -1,0 +1,41 @@
+<h2>Access to Kanbantool</h2>
+<p>
+Domain - is the first part of the URL you use to connect to your Kanbantool account. It's usually your company name.
+</p>
+<p>
+API Token - you can get this when you log into Kanbantool. It's under user settings. If you enter your domain below you have find your API Token here:
+<button id="getApiToken">find your api token</button>
+</p>
+
+<div class="formBox">
+  <form method="POST" action="/api_access">
+  	<label for="domain">Domain</label>
+  	<input id="domain" name="domain" />
+  	<label for="api_token">API Token:</label>
+  	<input id="api_token" name="api_token" type="password"/>
+  	<input class="button" type="submit" value="Save"></input>
+  </form>
+</div>
+
+<script>
+  document
+    .getElementById("getApiToken")
+    .addEventListener("click", getApiToken, true);
+  
+  function getApiToken(){
+    var domain = document.getElementById("domain").value;
+
+    if (domain){
+      if (!domain.includes('.kanbantool.com'))
+        domain += '.kanbantool.com';
+
+      window.open(`https://${domain}/profile/api_token`);
+    }
+    else{
+      alert("set domain first");
+    }
+
+    return true ;
+    
+  }
+</script>

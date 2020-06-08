@@ -1,0 +1,37 @@
+<h2>Set log level</h2>
+
+<form action="/log_level" method="POST">
+	<label for="level"> Log level</label>
+	<input id="level" name="level" />
+	<input type="submit" value="Submit" />
+</form>
+
+<h2>Raw data</h2>
+
+<a href="/raw/user">user</a><br/>
+
+<select id="board" name="board">
+  <% @user["boards"].each do |board| %>
+    <option value="<%= board['id'] %>"><%=board["name"] %></option>
+  <% end %>
+</select>
+
+<select id="dataType" name="dataType">
+  <option value="/raw/board/:id">Raw Board</option>
+  <option value="/raw/board/:id/changelogs">Raw Changelogs</option>
+  <option value="/raw/board/:id/activities">Raw Activity</option>
+</select>
+
+<button id="rawGet">Get</button>
+
+<script>
+  document
+    .getElementById("rawGet")
+    .addEventListener("click", rawGet);
+
+  function rawGet(){
+    const board_id = document.getElementById("board").value;
+    const dataType = document.getElementById("dataType").value;
+    window.open(dataType.replace(':id', board_id));
+  }
+</script>
