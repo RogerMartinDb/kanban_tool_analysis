@@ -3,20 +3,20 @@
 <em>Cards that moved stages on this day will appear under both stages</em>
 
 <div>
-	<% @view_data.stages.each do |stage| %>
-	<h2><%= stage[:name]%></h2>
+  <% @view_data.stages.each do |stage| %>
+  <h2><%= stage[:name]%></h2>
 
   <div class="cardCollection">
 
-		<% stage[:cards].each do |card| %>
-		<a href="<%= card[:url] %>">
-			<div class="card high <%= "invert" if card[:invert]%>" style="background-color: <%= card[:color] %>"><%= card[:name] %></div>
-		</a>
+    <% stage[:cards].each do |card| %>
+    <a href="<%= card[:url] %>">
+      <div class="card high <%= "invert" if card[:invert]%>" style="background-color: <%= card[:color] %>"><%= card[:name] %></div>
+    </a>
 
-		<% end %>
+    <% end %>
 
   </div>
 
-	<% end %>
+  <% end %>
 
 </div>

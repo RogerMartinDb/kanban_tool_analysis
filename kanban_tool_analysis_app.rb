@@ -6,25 +6,25 @@ class KanbanToolAnalysisApp < AppBase
   general_configure
 
   before do
-  	return if request.path_info == '/api_access'
-  	@api_access = AccessSettings.new session
-  	redirect '/api_access', 303  unless @api_access.valid?
+    return if request.path_info == '/api_access'
+    @api_access = AccessSettings.new session
+    redirect '/api_access', 303  unless @api_access.valid?
   end
 
   get '/' do
-		@user = api.current_user
-		erb :index
-	end
+    @user = api.current_user
+    erb :index
+  end
 
-	get '/api_access' do
-		erb :api_access
-	end
+  get '/api_access' do
+    erb :api_access
+  end
 
-	post '/api_access' do
-		@api_access = AccessSettings.new params
-		@api_access.store session
-		redirect to('/')
-	end
+  post '/api_access' do
+    @api_access = AccessSettings.new params
+    @api_access.store session
+    redirect to('/')
+  end
 
   get '/period' do
     erb :period
@@ -36,30 +36,30 @@ class KanbanToolAnalysisApp < AppBase
     redirect to('/')
   end
 
-	get '/board/:id' do |id|
-		@board = Board.new api.board(id)
-		erb :board
-	end
+  get '/board/:id' do |id|
+    @board = Board.new api.board(id)
+    erb :board
+  end
 
-	get '/board/:id/work_in_period' do |id|
+  get '/board/:id/work_in_period' do |id|
 
-		@view_data = ViewData::WorkInPeriod.new api, id, period
+    @view_data = ViewData::WorkInPeriod.new api, id, period
 
-		erb :work_in_period
-	end
+    erb :work_in_period
+  end
 
-	get '/board/:id/work_in_period/board_at_day/:date' do |id, date|
+  get '/board/:id/work_in_period/board_at_day/:date' do |id, date|
 
-		@view_data = ViewData::BoardAtDay.new api, id, Date.parse(date)
+    @view_data = ViewData::BoardAtDay.new api, id, Date.parse(date)
 
-		erb :board_at_day
-	end
+    erb :board_at_day
+  end
 
   get '/raw/user' do
     api.current_user.to_json
   end
 
-	get '/raw/board/:id' do |id|
+  get '/raw/board/:id' do |id|
     Board.new(api.board(id)).raw.to_json
   end
 
@@ -78,22 +78,22 @@ class KanbanToolAnalysisApp < AppBase
   end
 
   get '/raw/card/:id' do |id|
-  	api.card_detail(id).to_json
+    api.card_detail(id).to_json
   end
 
   get '/debug' do
     @user = api.current_user
-  	erb :debug
+    erb :debug
   end
 
   post '/log_level' do 
-  	level = params["level"]
-  	logger.level = level
-  	erb "log level is now #{level}"
+    level = params["level"]
+    logger.level = level
+    erb "log level is now #{level}"
   end
 
 
-	private
+  private
 
   def period
     from = get_date :from, Date.today - 14
@@ -107,8 +107,8 @@ class KanbanToolAnalysisApp < AppBase
     Date.parse value
   end
 
-	def api
-		KbtApi.new(@api_access.domain, @api_access.api_token)
-	end
+  def api
+    KbtApi.new(@api_access.domain, @api_access.api_token)
+  end
 
 end

@@ -1,17 +1,17 @@
 <html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="/css/style.css"/>
-	</head>	
-	<body>
-		<div>
-			<nav>
-				<a href="/">Home</a>
-				<a href="/api_access">Access</a>
-				<a href="/period">Period of interest <%= period %></a>
-			</nav>
-		</div>
-		<div>
-			<%=yield %>
-		</div>
-	</body>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+  </head> 
+  <body>
+    <div>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/api_access">Access</a>
+        <a href="/period">Period of interest <%= period %></a>
+      </nav>
+    </div>
+    <div>
+      <%=yield %>
+    </div>
+  </body>
 </html>

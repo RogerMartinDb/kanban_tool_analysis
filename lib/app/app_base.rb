@@ -3,7 +3,7 @@ require_relative 'app_logger'
 
 class AppBase < Sinatra::Application
  
- 	def self.general_configure
+  def self.general_configure
 
     enable :sessions, :logging
     set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
@@ -12,12 +12,12 @@ class AppBase < Sinatra::Application
     helpers Sinatra::CustomLogger
 
     configure :development, :production do
-        FileUtils.mkdir_p ("#{root}/log")
-  		file = File.open("#{root}/log/#{environment}.log", 'a+')
-  		file.sync = true
-  		logger = Logger.new(file)
-  		logger.level = development? ? Logger::INFO : Logger::WARN
-  		AppLogger.init logger
+      FileUtils.mkdir_p ("#{root}/log")
+      file = File.open("#{root}/log/#{environment}.log", 'a+')
+      file.sync = true
+      logger = Logger.new(file)
+      logger.level = development? ? Logger::INFO : Logger::WARN
+      AppLogger.init logger
 
       set :logger, logger
     end

@@ -7,106 +7,106 @@
 
 <div class="cardCollection">
 <% @view_data.work_by_card_types.each do |card_type| %>
-	<div class="card <%= "invert" if card_type[:invert]%>" style="background-color: <%= card_type[:color] %>"><%= card_type[:name] %></div>
+  <div class="card <%= "invert" if card_type[:invert]%>" style="background-color: <%= card_type[:color] %>"><%= card_type[:name] %></div>
 <% end %>
 </div>
 
 <h2>What the team has been working on <%= @view_data.start %> to <%= @view_data.finish %></h2>
 <div>
-	<canvas id="cvWorkByDate" width="800px" height="160px"></canvas>
+  <canvas id="cvWorkByDate" width="800px" height="160px"></canvas>
 </div>
 
 <h2>Cards Done</h2>
 
-	<div class="cardCollection">
-		<% @view_data.work_done.each do |card| %>
-			<div class="cardAndUsers">
-				<table width="100%" cellspacing="0" cellpadding="0">
-				  <tr>
-				    <td>
-				      <table cellspacing="0" cellpadding="0">
-				        <tr>
-				          <td class="	cardbutton__cell <%= (card[:invert]) ? 'cardbutton--light' : 'cardbutton--dark' %>" bgcolor="<%= card[:color] %>">
-				            <a  class="cardbutton" href="<%= card[:url] %>" >
-				              <%= card[:name] %>     
-				            </a>
-				          </td>
-				        </tr>
-				      </table>
-				    </td>
-				  </tr>
-				</table>
-				<div class="Users">
-					<%= card[:users] %>
-				</div>
-			</div>
-		<% end %>
-	</div>
+  <div class="cardCollection">
+    <% @view_data.work_done.each do |card| %>
+      <div class="cardAndUsers">
+        <table width="100%" cellspacing="0" cellpadding="0">
+          <tr>
+            <td>
+              <table cellspacing="0" cellpadding="0">
+                <tr>
+                  <td class=" cardbutton__cell <%= (card[:invert]) ? 'cardbutton--light' : 'cardbutton--dark' %>" bgcolor="<%= card[:color] %>">
+                    <a  class="cardbutton" href="<%= card[:url] %>" >
+                      <%= card[:name] %>     
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        <div class="Users">
+          <%= card[:users] %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
 
 
 <script>
-	const canvas = document.getElementById("cvWorkByDate");
+  const canvas = document.getElementById("cvWorkByDate");
 
-	canvas.addEventListener("click", canvasClick);
-	
-	const workByDay = <%= @view_data.work_by_card_type_by_day.to_json %>;
+  canvas.addEventListener("click", canvasClick);
+  
+  const workByDay = <%= @view_data.work_by_card_type_by_day.to_json %>;
 
-	const days = Object.keys(workByDay)
+  const days = Object.keys(workByDay)
 
-	const day_width = canvas.width / days.length;
-	const day_height = 20;
-	const bar_height = canvas.height - day_height;
+  const day_width = canvas.width / days.length;
+  const day_height = 20;
+  const bar_height = canvas.height - day_height;
 
-	var context = canvas.getContext('2d');
+  var context = canvas.getContext('2d');
   context.font = "8px";
   
-	draw([0, canvas.height - day_height], [canvas.width, canvas.height - day_height]);
+  draw([0, canvas.height - day_height], [canvas.width, canvas.height - day_height]);
 
-	writeDays();
+  writeDays();
 
-	drawBars();
+  drawBars();
 
-	function canvasClick(event){
-		x = event.pageX - canvas.offsetLeft;
-		day_index = Math.trunc(x / day_width);
-		window.open(window.location + '/board_at_day/' + days[day_index]);
-	}
+  function canvasClick(event){
+    x = event.pageX - canvas.offsetLeft;
+    day_index = Math.trunc(x / day_width);
+    window.open(window.location + '/board_at_day/' + days[day_index]);
+  }
 
-	function drawBars(){
-		let position = [0, 0];
-		days.forEach(day => {
-			drawBar(position, workByDay[day]);
-			position = [position[0] + day_width, 0];
-		});
-	}
+  function drawBars(){
+    let position = [0, 0];
+    days.forEach(day => {
+      drawBar(position, workByDay[day]);
+      position = [position[0] + day_width, 0];
+    });
+  }
 
-	function drawBar(position, colors){
-		offset = 0;
-		colors.forEach(data => {
-			height = bar_height * data.value;
-			context.fillStyle = data.color;
-			context.fillRect(position[0], position[1] + offset, day_width-1, height);
-			offset += height;
-		})
+  function drawBar(position, colors){
+    offset = 0;
+    colors.forEach(data => {
+      height = bar_height * data.value;
+      context.fillStyle = data.color;
+      context.fillRect(position[0], position[1] + offset, day_width-1, height);
+      offset += height;
+    })
 
-	}
+  }
 
-	function writeDays(){
-		let x = day_width/2 - 5;
-		const y = canvas.height - 5;
+  function writeDays(){
+    let x = day_width/2 - 5;
+    const y = canvas.height - 5;
 
-		days.forEach(day => {
-			write(dayOfMonth(day), [x, y])
-			x += day_width;
-		});
-	}
-	
-	function dayOfMonth(day){
-		return new Date(day).getDate();
-	}
+    days.forEach(day => {
+      write(dayOfMonth(day), [x, y])
+      x += day_width;
+    });
+  }
+  
+  function dayOfMonth(day){
+    return new Date(day).getDate();
+  }
 
-	function draw(a, b){
+  function draw(a, b){
     context.beginPath();
     context.moveTo(a[0], a[1]);
     context.lineTo(b[0], b[1]);
