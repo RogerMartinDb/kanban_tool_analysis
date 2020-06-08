@@ -12,6 +12,7 @@ class AppBase < Sinatra::Application
     helpers Sinatra::CustomLogger
 
     configure :development, :production do
+        FileUtils.mkdir_p ("#{root}/log")
   		file = File.open("#{root}/log/#{environment}.log", 'a+')
   		file.sync = true
   		logger = Logger.new(file)
