@@ -2,10 +2,10 @@
 
 # KanbanToolAnalysis
 
-Provides historical data on your team's KanbanTool activity
+Provides historical data on your team's [KanbanTool](https://kanbantool.com/) activity
 
 
 to run:
-$ bundle install
-$ rackup
 
+    $ bundle install
+    $ rackup
