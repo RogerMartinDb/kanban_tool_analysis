@@ -27,23 +27,23 @@ class HistoryBuilder
   end
 
   def card_histories_by_stage_id
-      by_stage_id = {}
+    by_stage_id = {}
 
-      card_histories
-        .values
-        .each{|card_history| 
-          card_history
-            .activities
-            .map(&:stage_id)
-            .uniq
-            .each{|stage_id| 
-              by_stage_id[stage_id] ||= []
-              by_stage_id[stage_id] << card_history
-            }
-        }
+    card_histories
+      .values
+      .each{|card_history| 
+        card_history
+          .activities
+          .map(&:stage_id)
+          .uniq
+          .each{|stage_id| 
+            by_stage_id[stage_id] ||= []
+            by_stage_id[stage_id] << card_history
+          }
+      }
 
-      by_stage_id
-    end
+    by_stage_id
+  end
 
   private
 
