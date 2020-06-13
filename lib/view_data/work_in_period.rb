@@ -34,17 +34,19 @@ module ViewData
     end
 
     def work_done
-      @work.work_done_in_period.each{|card| 
+      cards = @work.work_done_in_period.each{|card| 
         card_type = get_card_type(card[:card_type_id])
 
         card[:color] = card_type["color_attrs"]["rgb"]
         card[:invert] = !!card_type["color_attrs"]["invert"]
         card[:url] = @url_builder.card_url(card[:card_id])
         card[:users] = formatted_workers(card[:work_by_user])
-
-        card
+        card[:card_type_name] = card_type["name"]
       }
-      .sort{|a, b| b[:card_type_id] <=> a[:card_type_id]}
+      
+      to_list_of_lists cards, :cards do |card|
+        {card_type_name: card[:card_type_name]}
+      end
     end
 
     def work_by_card_types
@@ -80,6 +82,23 @@ module ViewData
     end
 
     private
+
+    def to_list_of_lists list, children_name, &to_parent
+      group = {}
+
+      list.each{|item| 
+        parent = to_parent.(item)
+        group[parent] ||= []
+        group[parent] << item
+      }
+
+      group
+        .to_a
+        .map{|parent, children| 
+          parent[children_name] = children
+          parent
+        }
+    end
 
     def formatted_workers work_by_user
       users = @board.collaborators

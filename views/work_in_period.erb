@@ -18,8 +18,12 @@
 
 <h2>Cards Done</h2>
 
+<% @view_data.work_done.each do |card_type| %>
+  <h3><%= card_type[:card_type_name] %></h3>
+
   <div class="cardCollection">
-    <% @view_data.work_done.each do |card| %>
+    <% card_type[:cards].each do |card| %>
+
       <div class="cardAndUsers">
         <table width="100%" cellspacing="0" cellpadding="0">
           <tr>
@@ -40,8 +44,9 @@
           <%= card[:users] %>
         </div>
       </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+<% end %>
 
 
 
