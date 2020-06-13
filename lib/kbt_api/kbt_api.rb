@@ -33,7 +33,11 @@ class KbtApi
   end
 
   def card_detail card_id
-    get "tasks/#{card_id}.json" 
+    begin
+      get "tasks/#{card_id}.json" 
+    rescue RestClient::NotFound
+      nil
+    end
   end
 
   private

@@ -108,6 +108,11 @@ class HistoryBuilder
 
       raw_card = @card_store.find_card_detail(card_id)
 
+      if raw_card.nil?
+        @deleted_cards << card_id
+        next
+      end
+
       card_state = Activity.new
 
       card_state.card_id = card_id
