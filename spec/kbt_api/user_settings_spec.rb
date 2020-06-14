@@ -1,25 +1,25 @@
 RSpec.describe AccessSettings, '#valid?' do
   context 'missing values from input' do
     it "nils should not be valid" do
-      sut = AccessSettings.new({})
-      expect(sut.valid?).to eq false
+      subject = AccessSettings.new({})
+      expect(subject.valid?).to eq false
     end
 
     it "blanks should not be valid" do
-      sut = AccessSettings.new({domain: '', api_token: ''})
-      expect(sut.valid?).to eq false
+      subject = AccessSettings.new({domain: '', api_token: ''})
+      expect(subject.valid?).to eq false
     end
 
     it "partials should not be valid" do
-      sut = AccessSettings.new({domain: 'abc'})
-      expect(sut.valid?).to eq false
+      subject = AccessSettings.new({domain: 'abc'})
+      expect(subject.valid?).to eq false
     end
   end
 
   context 'complete values in input' do
     it "should be valid" do
-      sut = AccessSettings.new({domain: 'abc', api_token: 'AABB'})
-      expect(sut.valid?).to eq true
+      subject = AccessSettings.new({domain: 'abc', api_token: 'AABB'})
+      expect(subject.valid?).to eq true
     end
   end
 
@@ -28,8 +28,8 @@ RSpec.describe AccessSettings, '#valid?' do
       input = {domain: 'abc.kanbantool.com', api_token: 'AABB'}
       output = {}
       
-      sut = AccessSettings.new(input)
-      sut.store output
+      subject = AccessSettings.new(input)
+      subject.store output
       
       expect(output).to eq input
     end
@@ -41,8 +41,8 @@ RSpec.describe AccessSettings, '#valid?' do
       input_with_full_domain = {domain: 'abc.kanbantool.com', api_token: 'AABB'}
       output = {}
       
-      sut = AccessSettings.new(input)
-      sut.store output
+      subject = AccessSettings.new(input)
+      subject.store output
       
       expect(output).to eq input_with_full_domain
     end
