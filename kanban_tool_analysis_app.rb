@@ -65,8 +65,14 @@ class KanbanToolAnalysisApp < AppBase
 
   get '/raw/board/:id/activities' do |id|
 
-    @history = HistoryBuilder.new api, id, period
-    @history.activities.to_json
+    history = HistoryBuilder.new api, id, period
+    history.activities.to_json
+  end
+
+  get '/raw/board/:id/card_histories' do |id|
+
+    history = HistoryBuilder.new api, id, period
+    history.card_histories.to_json
   end
 
   get '/raw/board/:id/changelogs' do |id|

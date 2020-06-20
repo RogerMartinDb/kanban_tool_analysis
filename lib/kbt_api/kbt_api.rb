@@ -29,7 +29,11 @@ class KbtApi
   end
 
   def card card_id
-    get "tasks/#{card_id}/preload.json" 
+    begin
+      get "tasks/#{card_id}/preload.json" 
+    rescue RestClient::NotFound
+      nil
+    end
   end
 
   def card_detail card_id

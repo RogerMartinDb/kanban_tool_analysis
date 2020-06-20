@@ -1,29 +1,22 @@
 class HistoryBuilder
 
-  attr_reader :activities, :card_histories
+  attr_reader :activities, :card_histories, :board
 
-  def initialize api, board_id, period
-    @api = api
-    @board_id = board_id
+  def initialize api, board_id, period, dependencies = {}
     @from = period.begin
     @to = period.end
 
-    @card_store = CardStore.new api
+    @board = Board.new(api.board(board_id))
+    @card_store = CardStore.new(api)
+    changelog_access = dependencies[:change_log_store] || ChangelogStore.new(board, api)
+
     @card_store.store_cards board.tasks
-
-    changelog_access = ChangelogStore.new board, api
-
     @changelogs = changelog_access.get_range period
 
     @activities = {}
     @card_histories = {}
 
     map_changelogs_to_activities
-
-  end
-
-  def board
-    @board_ ||= Board.new @api.board(@board_id)
   end
 
   def card_histories_by_stage_id
@@ -50,7 +43,7 @@ class HistoryBuilder
   What_not_interested_in = %w(comment_added comment_deleted subtask_checked subtask_unchecked cloned task_dependency_created task_dependency_deleted)
 
   def map_changelogs_to_activities
-        @deleted_cards = []
+    @deleted_cards = []
     @workflow_stages = board.workflow_stages
     
     starting_cardset = rollback_to_starting_cardset
