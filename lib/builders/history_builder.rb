@@ -111,7 +111,9 @@ class HistoryBuilder
       card_state.card_id = card_id
       card_state.card_type_id = raw_card["card_type_id"].to_i
       card_state.start = @from
-      
+      card_state.finish = nil
+      card_state.blocked = false
+
       changelogs = raw_card["changelogs"]
 
       next if changelogs.nil?
@@ -134,7 +136,6 @@ class HistoryBuilder
             card_state.swimlane_id = change["data"]["swimlane_id"]
             card_state.stage_id = change["data"]["workflow_stage_id"]
             card_state.stage_type = stage_type(card_state.stage_id)
-            card_state.blocked = false
           when "moved_from_board"
             card_state.start = change_time
             card_state.swimlane_id = change["data"]["to_swimlane_id"]
@@ -232,6 +233,7 @@ class HistoryBuilder
           activity.stage_type = stage_type(activity.stage_id)
           activity.swimlane_id = change["data"]["swimlane_id"].to_i
           activity.blocked = false
+          activity.finish = nil
 
           @open_activities[activity.card_id] = activity
         when "updated"

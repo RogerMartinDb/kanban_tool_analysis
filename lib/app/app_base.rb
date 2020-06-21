@@ -27,7 +27,6 @@ class AppBase < Sinatra::Application
       also_reload "#{root}/lib/**/*.rb"
     end
 
-
     require "#{root}/config/initializers/autoloader.rb"
   end
 end

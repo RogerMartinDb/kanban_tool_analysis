@@ -19,8 +19,7 @@ RSpec.describe HistoryBuilder do
     def card_detail card_id
       FileFixture.as_json("sample_card_detail_#{card_id}.json")
     end
-
-   end
+  end
 
   it "generates good sample activites and card histories" do
     api = MockKbtApi.new
