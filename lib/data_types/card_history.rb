@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CardHistory # rubocop:todo Style/Documentation
   attr_reader :id, :name, :card_type_id, :activities, :current_activity
 

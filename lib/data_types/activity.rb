@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Activity # rubocop:todo Style/Documentation
   attr_accessor :start, :finish, :user_id, :card_type_id, :card_id,
                 :stage_id, :stage_type, :swimlane_id, :blocked
@@ -23,7 +25,7 @@ class Activity # rubocop:todo Style/Documentation
 
     (from..to)
       .select(&day_filter)
-      .inject(0) { |sum, date| sum += duration_at(date) }
+      .inject(0) { |sum, date| sum + duration_at(date) }
   end
 
   def to_json(_)

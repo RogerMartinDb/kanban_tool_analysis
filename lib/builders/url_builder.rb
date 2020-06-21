@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UrlBuilder # rubocop:todo Style/Documentation
   def initialize(api, board_id)
     @api = api

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe AccessSettings, '#valid?' do # rubocop:todo Metrics/BlockLength
   context 'missing values from input' do
     it 'nils should not be valid' do

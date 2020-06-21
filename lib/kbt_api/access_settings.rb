@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AccessSettings # rubocop:todo Style/Documentation
   attr_reader :domain, :api_token
 
@@ -21,7 +23,7 @@ class AccessSettings # rubocop:todo Style/Documentation
 
   private
 
-  TLD = '.kanbantool.com'.freeze
+  TLD = '.kanbantool.com'
 
   def normalize(domain)
     return domain if domain.nil? || domain.empty?

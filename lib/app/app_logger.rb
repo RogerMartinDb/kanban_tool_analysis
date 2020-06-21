@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AppLogger # rubocop:todo Style/Documentation
   extend SingleForwardable
 
@@ -8,6 +10,6 @@ class AppLogger # rubocop:todo Style/Documentation
 
     def init(logger)
       @logger = logger
-  end
+    end
   end
 end

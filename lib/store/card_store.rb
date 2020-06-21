@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CardStore # rubocop:todo Style/Documentation
   @@cards = {} # rubocop:todo Style/ClassVars
   @@card_details = {} # rubocop:todo Style/ClassVars

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sinatra/custom_logger'
 require_relative 'app_logger'
 

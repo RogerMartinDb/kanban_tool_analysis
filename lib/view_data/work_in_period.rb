@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ViewData
   # rubocop:todo Style/Documentation
   class WorkInPeriod # rubocop:todo Metrics/ClassLength
@@ -33,15 +35,9 @@ module ViewData
       @url_builder.board_url
     end
 
-    def work_done # rubocop:todo Metrics/AbcSize # rubocop:todo Metrics/MethodLength
+    def work_done
       cards = @work.work_done_in_period.each do |card|
-        card_type = get_card_type(card[:card_type_id])
-
-        card[:color] = card_type['color_attrs']['rgb']
-        card[:invert] = !!card_type['color_attrs']['invert'] # rubocop:todo Style/DoubleNegation
-        card[:url] = @url_builder.card_url(card[:card_id])
-        card[:users] = formatted_workers(card[:work_by_user])
-        card[:card_type_name] = card_type['name']
+        decorate card
       end
 
       to_list_of_lists cards, :cards do |card|
@@ -81,6 +77,16 @@ module ViewData
 
     private
 
+    def decorate(card)
+      card_type = get_card_type(card[:card_type_id])
+
+      card[:color] = card_type['color_attrs']['rgb']
+      card[:invert] = !!card_type['color_attrs']['invert'] # rubocop:todo Style/DoubleNegation
+      card[:url] = @url_builder.card_url(card[:card_id])
+      card[:users] = formatted_workers(card[:work_by_user])
+      card[:card_type_name] = card_type['name']
+    end
+
     def to_list_of_lists(list, children_name, &to_parent) # rubocop:todo Metrics/MethodLength
       group = {}
 
@@ -102,7 +108,7 @@ module ViewData
       users = @board.collaborators
 
       work_by_user
-        .select { |work| !(work[:user_id].nil? || work[:user_id] == 0) }
+        .reject { |work| work[:user_id].nil? || work[:user_id].zero? }
         .map { |work| users[work[:user_id]]['name'].split.first + " (#{format_time(work[:duration])})" }
         .join(', ')
     end

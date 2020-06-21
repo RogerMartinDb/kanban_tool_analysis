@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Board # rubocop:todo Style/Documentation
   attr_reader :id, :name, :description, :raw, :tasks, :changelogs
 
@@ -11,23 +13,17 @@ class Board # rubocop:todo Style/Documentation
     @changelogs = @raw['changelogs']
   end
 
-  # rubocop:todo Naming/MemoizedInstanceVariableName
-  def card_types # rubocop:todo Naming/MemoizedInstanceVariableName
-    @ct ||= to_h_id @raw['card_types']
+  def card_types
+    @_card_types ||= to_h_id @raw['card_types']
   end
-  # rubocop:enable Naming/MemoizedInstanceVariableName
 
-  # rubocop:todo Naming/MemoizedInstanceVariableName
   def collaborators
-    @c ||= to_h_id @raw['collaborators']
+    @_collaborators ||= to_h_id @raw['collaborators']
   end
-  # rubocop:enable Naming/MemoizedInstanceVariableName
 
-  # rubocop:todo Naming/MemoizedInstanceVariableName
   def workflow_stages
-    @ws ||= to_h_id @raw['workflow_stages']
+    @_workflow_stages ||= to_h_id @raw['workflow_stages']
   end
-  # rubocop:enable Naming/MemoizedInstanceVariableName
 
   private
 

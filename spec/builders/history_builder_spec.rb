@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe HistoryBuilder do # rubocop:todo Metrics/BlockLength

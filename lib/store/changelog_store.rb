@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangelogStore # rubocop:todo Style/Documentation
   def initialize(board, api)
     @board = board

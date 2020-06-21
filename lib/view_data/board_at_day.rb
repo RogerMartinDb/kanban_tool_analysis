@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ViewData
   class BoardAtDay # rubocop:todo Style/Documentation
     attr_reader :date

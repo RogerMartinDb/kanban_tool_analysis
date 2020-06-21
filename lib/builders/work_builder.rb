@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WorkBuilder # rubocop:todo Style/Documentation
   attr_reader :pc_work_by_card_type_by_day, :work_done_in_period
 
@@ -72,7 +74,7 @@ class WorkBuilder # rubocop:todo Style/Documentation
       total = 0
       by_day[day].each { |_card_type_id, duration| total += duration }
 
-      next if total == 0
+      next if total.zero?
 
       by_day[day].keys.each { |card_type_id| by_day[day][card_type_id] /= total }
     end

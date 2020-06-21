@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # rubocop:todo Style/Documentation
 class HistoryBuilder # rubocop:todo Metrics/ClassLength
   attr_reader :activities, :card_histories, :board
