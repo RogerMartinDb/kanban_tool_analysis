@@ -1,4 +1,4 @@
-class AccessSettings
+class AccessSettings # rubocop:todo Style/Documentation
   attr_reader :domain, :api_token
 
   def initialize(source)
@@ -11,7 +11,8 @@ class AccessSettings
   end
 
   def store(target)
-    target[:domain], target[:api_token] = @domain, @api_token
+    target[:domain] = @domain
+    target[:api_token] = @api_token
   end
 
   def to_s
@@ -20,14 +21,12 @@ class AccessSettings
 
   private
 
-  TLD = '.kanbantool.com'
-  
-  def normalize domain
+  TLD = '.kanbantool.com'.freeze
+
+  def normalize(domain)
     return domain if domain.nil? || domain.empty?
 
     domain += TLD unless domain.include?(TLD)
     domain
   end
-
-
 end

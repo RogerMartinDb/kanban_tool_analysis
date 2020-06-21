@@ -1,10 +1,9 @@
 require 'sinatra/custom_logger'
 require_relative 'app_logger'
 
-class AppBase < Sinatra::Application
- 
-  def self.general_configure
-
+class AppBase < Sinatra::Application # rubocop:todo Style/Documentation
+  # rubocop:todo Metrics/MethodLength
+  def self.general_configure # rubocop:todo Metrics/AbcSize
     enable :sessions, :logging
     set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
     $stdout.sync = true
@@ -12,7 +11,7 @@ class AppBase < Sinatra::Application
     helpers Sinatra::CustomLogger
 
     configure :development, :production do
-      FileUtils.mkdir_p ("#{root}/log")
+      FileUtils.mkdir_p "#{root}/log"
       file = File.open("#{root}/log/#{environment}.log", 'a+')
       file.sync = true
       logger = Logger.new(file)
@@ -29,4 +28,5 @@ class AppBase < Sinatra::Application
 
     require "#{root}/config/initializers/autoloader.rb"
   end
+  # rubocop:enable Metrics/MethodLength
 end

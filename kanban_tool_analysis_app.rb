@@ -1,14 +1,14 @@
 require_relative 'lib/app/app_base'
 
-class KanbanToolAnalysisApp < AppBase
- 
+class KanbanToolAnalysisApp < AppBase # rubocop:todo Style/Documentation
   AppBase.set :root, File.dirname(__FILE__)
   general_configure
 
   before do
     return if request.path_info == '/api_access'
+
     @api_access = AccessSettings.new session
-    redirect '/api_access', 303  unless @api_access.valid?
+    redirect '/api_access', 303 unless @api_access.valid?
   end
 
   get '/' do
@@ -42,14 +42,12 @@ class KanbanToolAnalysisApp < AppBase
   end
 
   get '/board/:id/work_in_period' do |id|
-
     @view_data = ViewData::WorkInPeriod.new api, id, period
 
     erb :work_in_period
   end
 
   get '/board/:id/work_in_period/board_at_day/:date' do |id, date|
-
     @view_data = ViewData::BoardAtDay.new api, id, Date.parse(date)
 
     erb :board_at_day
@@ -64,19 +62,16 @@ class KanbanToolAnalysisApp < AppBase
   end
 
   get '/raw/board/:id/activities' do |id|
-
     history = HistoryBuilder.new api, id, period
     history.activities.to_json
   end
 
   get '/raw/board/:id/card_histories' do |id|
-
     history = HistoryBuilder.new api, id, period
     history.card_histories.to_json
   end
 
   get '/raw/board/:id/changelogs' do |id|
-
     board = Board.new api.board(id)
     cls = ChangelogStore.new board, api
 
@@ -92,12 +87,11 @@ class KanbanToolAnalysisApp < AppBase
     erb :debug
   end
 
-  post '/log_level' do 
-    level = params["level"]
+  post '/log_level' do
+    level = params['level']
     logger.level = level
     erb "log level is now #{level}"
   end
-
 
   private
 
@@ -107,14 +101,14 @@ class KanbanToolAnalysisApp < AppBase
     from..to
   end
 
-  def get_date param, default
+  def get_date(param, default)
     value = session[param]
     return default if value.nil?
+
     Date.parse value
   end
 
   def api
     KbtApi.new(@api_access.domain, @api_access.api_token)
   end
-
 end
