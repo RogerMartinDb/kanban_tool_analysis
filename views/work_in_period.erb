@@ -59,7 +59,7 @@
 
   const days = Object.keys(workByDay)
 
-  const day_width = canvas.width / days.length;
+  const day_width = Math.ceil(canvas.width / days.length);
   const day_height = 20;
   const bar_height = canvas.height - day_height;
 
@@ -91,7 +91,7 @@
     colors.forEach(data => {
       height = bar_height * data.value;
       context.fillStyle = data.color;
-      context.fillRect(position[0], position[1] + offset, day_width-1, height);
+      context.fillRect(position[0], position[1] + offset, day_width, height);
       offset += height;
     })
 
