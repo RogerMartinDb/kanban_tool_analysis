@@ -59,7 +59,7 @@
 
   const days = Object.keys(workByDay)
 
-  const day_width = Math.ceil(canvas.width / days.length);
+  const day_width = Math.round(canvas.width / days.length);
   const day_height = 20;
   const bar_height = canvas.height - day_height;
 
