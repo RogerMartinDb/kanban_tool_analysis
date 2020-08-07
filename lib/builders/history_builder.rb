@@ -43,7 +43,9 @@ class HistoryBuilder # rubocop:todo Metrics/ClassLength
   private
 
   # rubocop:todo Naming/ConstantName
-  What_not_interested_in = %w[comment_added comment_deleted subtask_checked subtask_unchecked cloned task_dependency_created task_dependency_deleted].freeze
+  What_not_interested_in = %w[comment_added comment_deleted subtask_checked subtask_unchecked 
+                            cloned task_dependency_created task_dependency_deleted
+                             task_reminder_triggered].freeze
   # rubocop:enable Naming/ConstantName
 
   def map_changelogs_to_activities
