@@ -69,15 +69,16 @@ RSpec.describe Activity, '#duration_at' do # rubocop:todo Metrics/BlockLength
   end
 end
 
-RSpec.describe Activity, '#duration_for' do
-  context 'time boundry of activity is known' do
-    it 'activity fully inside period' do
+RSpec.describe Activity, '#duration_up_to' do
+  context 'duration from distant past up to a point' do
+    it 'find correct duration' do
       subject.start = DateTime.new(2001, 2, 3, 17, 0, 0)
       subject.finish = DateTime.new(2001, 2, 5, 15, 35, 0)
 
-      period = Date.new(2001, 2, 1)..Date.new(2001, 2, 10)
+      period_end = Date.new(2001, 2, 4)
       filter = ->(_) { true }
-      expect(subject.duration_in(period, filter)).to eq 1 * 60 + 8 * 60 + 6 * 60 + 35
+
+      expect(subject.duration_up_to(period_end, filter)).to eq 1 * 60 + 8 * 60
     end
   end
 end

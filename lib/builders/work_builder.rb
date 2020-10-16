@@ -46,6 +46,7 @@ class WorkBuilder # rubocop:todo Style/Documentation
     @card_histories
       .values
       .select { |card_h| card_h.current_activity.stage_type == 'done' }
+      .select { |card_h| card_h.current_activity.start > @period.begin }
       .select { |card_h| card_h.activities.any?(&@is_active) }
       .map do |card_h|
         {
@@ -62,7 +63,7 @@ class WorkBuilder # rubocop:todo Style/Documentation
 
     activities
       .select(&@is_active)
-      .each { |activity| user_work[activity.user_id] += activity.duration_in(@period, @day_filter) }
+      .each { |activity| user_work[activity.user_id] += activity.duration_up_to(@period.end, @day_filter) }
 
     user_work
       .map { |user_id, duration| { user_id: user_id, duration: duration } }

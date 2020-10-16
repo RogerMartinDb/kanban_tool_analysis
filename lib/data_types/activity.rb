@@ -19,9 +19,9 @@ class Activity # rubocop:todo Style/Documentation
     [duration, 0].max.to_f
   end
 
-  def duration_in(period, day_filter)
-    from = [period.begin, start].max.to_date
-    to = [period.end, finish || period.end].min.to_date
+  def duration_up_to(period_end, day_filter)
+    from = start.to_date
+    to = [period_end, finish || period_end].min.to_date
 
     (from..to)
       .select(&day_filter)

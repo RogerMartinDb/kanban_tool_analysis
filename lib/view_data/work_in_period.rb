@@ -8,7 +8,7 @@ module ViewData
     def initialize(api, board_id, period)
       @period = period
 
-      history = HistoryBuilder.new api, board_id, period
+      history = HistoryBuilder.new api, board_id, extended(period)
 
       @work = WorkBuilder.new period, history
       @board = history.board
@@ -76,6 +76,12 @@ module ViewData
     end
 
     private
+
+    def extended(period)
+      duration = period.last - period.first
+      step_back = [duration, 14].min
+      (period.first - step_back)..period.last
+    end
 
     def decorate(card)
       card_type = get_card_type(card[:card_type_id])
