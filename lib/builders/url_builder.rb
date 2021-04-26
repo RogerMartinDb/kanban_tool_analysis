@@ -6,8 +6,9 @@ class UrlBuilder # rubocop:todo Style/Documentation
     @board_id = board_id
   end
 
-  def board_url
-    @api.board_url @board_id
+  def board_url(board_id = nil)
+    board_id ||= @board_id
+    @api.board_url board_id
   end
 
   def card_url(card_id)

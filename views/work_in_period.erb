@@ -7,7 +7,13 @@
 
 <div class="cardCollection">
 <% @view_data.work_by_card_types.each do |card_type| %>
-  <div class="card <%= "invert" if card_type[:invert]%>" style="background-color: <%= card_type[:color] %>"><%= card_type[:name] %></div>
+  <div class="card <%= "invert" if card_type[:invert]%>" style="background-color: <%= card_type[:color] %>">
+    <%if card_type[:board_url] != @view_data.board_url %>
+      <a href="<%=card_type[:board_url]%>"><%= card_type[:name] %></a>
+    <%else%>
+      <%= card_type[:name] %>
+    <%end%>
+  </div>
 <% end %>
 </div>
 
@@ -32,7 +38,7 @@
                 <tr>
                   <td class=" cardbutton__cell <%= (card[:invert]) ? 'cardbutton--light' : 'cardbutton--dark' %>" bgcolor="<%= card[:color] %>">
                     <a  class="cardbutton" href="<%= card[:url] %>" >
-                      <%= card[:name] %>     
+                      <%= card[:name] %>
                     </a>
                   </td>
                 </tr>
@@ -54,7 +60,7 @@
   const canvas = document.getElementById("cvWorkByDate");
 
   canvas.addEventListener("click", canvasClick);
-  
+
   const workByDay = <%= @view_data.work_by_card_type_by_day.to_json %>;
 
   const days = Object.keys(workByDay)
@@ -65,7 +71,7 @@
 
   var context = canvas.getContext('2d');
   context.font = "8px";
-  
+
   draw([0, canvas.height - day_height], [canvas.width, canvas.height - day_height]);
 
   writeDays();
@@ -106,7 +112,7 @@
       x += day_width;
     });
   }
-  
+
   function dayOfMonth(day){
     return new Date(day).getDate();
   }

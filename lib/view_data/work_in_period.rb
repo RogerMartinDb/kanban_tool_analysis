@@ -13,6 +13,7 @@ module ViewData
       @work = WorkBuilder.new period, history
       @board = history.board
       @url_builder = UrlBuilder.new api, board_id
+      @card_types = CardTypeStore.new api
     end
 
     def board_name
@@ -52,7 +53,8 @@ module ViewData
         {
           name: card_type['name'],
           color: card_type['color_attrs']['rgb'],
-          invert: !!card_type['color_attrs']['invert'] # rubocop:todo Style/DoubleNegation
+          invert: !!card_type['color_attrs']['invert'], # rubocop:todo Style/DoubleNegation
+          board_url: @url_builder.board_url(card_type['board_id'])
         }
       end
     end
@@ -120,12 +122,7 @@ module ViewData
     end
 
     def get_card_type(card_type_id)
-      card_types = @board.card_types
-
-      card_types[card_type_id] || {
-        'name' => 'other',
-        'color_attrs' => { 'rgb' => 'white', 'invert' => false }
-      }
+      return @card_types.get_card_type(card_type_id, @board)
     end
 
     def format_time(minutes)
