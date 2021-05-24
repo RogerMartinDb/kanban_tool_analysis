@@ -7,3 +7,4 @@ gem 'rspec'
 gem 'rubocop', require: false
 gem 'sinatra', require: 'sinatra/base'
 gem 'sinatra-contrib', require: 'sinatra/reloader'
+gem 'ruby-debug-ide'
