@@ -43,7 +43,7 @@ class HistoryBuilder # rubocop:todo Metrics/ClassLength
   private
 
   # rubocop:todo Naming/ConstantName
-  What_not_interested_in = %w[comment_added comment_deleted subtask_checked subtask_unchecked 
+  What_not_interested_in = %w[comment_added comment_deleted subtask_checked subtask_unchecked
                             cloned task_dependency_created task_dependency_deleted
                              task_reminder_triggered].freeze
   # rubocop:enable Naming/ConstantName
@@ -293,9 +293,9 @@ class HistoryBuilder # rubocop:todo Metrics/ClassLength
           open_activity.stage_type = stage_type(open_activity.stage_id)
           open_activity.start = change_time
         when 'deleted', 'moved_to_board'
-          next if activity.nil?
-
           activity = @open_activities[card_id]
+          next if activity.nil?
+          activity = activity.clone
           activity.finish = change_time
           store_activity activity
 
