@@ -27,7 +27,7 @@ class WorkBuilder # rubocop:todo Style/Documentation
 
     @pc_work_by_card_type_by_day.values.each do |card_type_work|
       card_type_work.each do |card_type_id, pc_work|
-        card_types[card_type_id] += pc_work
+        card_types[card_type_id] += pc_work if pc_work > 0.0001
       end
     end
 
@@ -45,6 +45,7 @@ class WorkBuilder # rubocop:todo Style/Documentation
   def work_done # rubocop:todo Metrics/MethodLength
     @card_histories
       .values
+      .select { |card_h| ! card_h.current_activity.nil? }
       .select { |card_h| card_h.current_activity.stage_type == 'done' }
       .select { |card_h| card_h.current_activity.start > @period.begin }
       .select { |card_h| card_h.activities.any?(&@is_active) }
