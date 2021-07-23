@@ -10,7 +10,7 @@
 
     <% stage[:cards].each do |card| %>
     <a href="<%= card[:url] %>">
-      <div class="card high <%= "invert" if card[:invert]%>" style="background-color: <%= card[:color] %>"><%= card[:name] %></div>
+      <div class="card high <%= "invert" if card[:invert]%>" style="background-color: <%= card[:color] %>"><%= h card[:name] %></div>
     </a>
 
     <% end %>

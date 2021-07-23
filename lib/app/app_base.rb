@@ -12,6 +12,16 @@ class AppBase < Sinatra::Application # rubocop:todo Style/Documentation
 
     helpers Sinatra::CustomLogger
 
+    helpers do
+      def h(text)
+        Rack::Utils.escape_html(text)
+      end
+
+      def hattr(text)
+        Rack::Utils.escape_path(text)
+      end
+    end
+
     configure :development, :production do
       FileUtils.mkdir_p "#{root}/log"
       file = File.open("#{root}/log/#{environment}.log", 'a+')

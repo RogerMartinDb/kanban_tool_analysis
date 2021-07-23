@@ -38,7 +38,7 @@
                 <tr>
                   <td class=" cardbutton__cell <%= (card[:invert]) ? 'cardbutton--light' : 'cardbutton--dark' %>" bgcolor="<%= card[:color] %>">
                     <a  class="cardbutton" href="<%= card[:url] %>" >
-                      <%= card[:name] %>
+                      <%= h card[:name] %>
                     </a>
                   </td>
                 </tr>
